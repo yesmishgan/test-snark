@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+package gnarkd;
+
+option go_package = "github.com/yesmishgan/test-snark/internal/pb";
+
+/*
+ Provides services to compute and verify Groth16 proofs
+ */
+service Groth16 {
+  // Prove takes circuitID and witness as parameter
+  rpc Prove(ProveRequest) returns (ProveResult);
+
+
+  // Verify takes circuitID, proof and public witness as parameter
+  rpc Verify(VerifyRequest) returns (VerifyResult);
+}
+
+message ProveRequest {
+  string circuitID = 1;
+  bytes witness = 2;
+}
+
+message ProveResult {
+  bytes proof = 1;
+}
+
+message VerifyRequest {
+  string circuitID = 1;
+  bytes proof = 2;
+  bytes publicWitness = 3;
+}
+
+message VerifyResult {
+  bool ok = 1;
+}
